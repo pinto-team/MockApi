@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from uuid import UUID
-from typing import List
+from typing import List, Optional
 
 from app.models.brand import Brand, BrandCreate, BrandUpdate
 from app.services.brand_service import brand_service
@@ -8,8 +8,16 @@ from app.services.brand_service import brand_service
 router = APIRouter()
 
 @router.get('/', response_model=List[Brand])
-async def list_brands():
-    return await brand_service.list()
+async def list_brands(
+    name: Optional[str] = Query(None, description="Filter by brand name"),
+    country: Optional[str] = Query(None, description="Filter by brand country")
+):
+    brands = await brand_service.list()
+    if name:
+        brands = [b for b in brands if name.lower() in b.name.lower()]
+    if country:
+        brands = [b for b in brands if b.country and country.lower() in b.country.lower()]
+    return brands
 
 @router.get('/{brand_id}', response_model=Brand)
 async def get_brand(brand_id: UUID):

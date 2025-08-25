@@ -1,6 +1,9 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from uuid import UUID, uuid4
+from typing import Generic, List, TypeVar
+
+T = TypeVar("T")
 
 class Timestamps(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
@@ -14,6 +17,6 @@ class PaginationMeta(BaseModel):
     limit: int
     total: int
 
-class ListResponse(BaseModel):
-    items: list
+class ListResponse(Generic[T], BaseModel):
+    items: List[T]
     pagination: PaginationMeta

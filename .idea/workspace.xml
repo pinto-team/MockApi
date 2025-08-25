@@ -5,14 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="init 2">
-      <change afterPath="$PROJECT_DIR$/scripts/seed.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/brand.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/brand.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/image.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/image.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/product.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/store.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/store.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/warehouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/warehouse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/brand_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/brand_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/category_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/category_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/image_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/image_routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/product_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/product_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/faker_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/faker_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/store_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/store_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/warehouse_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/warehouse_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/brand_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/brand_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/category_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/category_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/product_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/product_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/seed.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/new_resource.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,6 +137,8 @@
       <workItem from="1756027875156" duration="1276000" />
       <workItem from="1756095878233" duration="3191000" />
       <workItem from="1756105771369" duration="296000" />
+      <workItem from="1756120087504" duration="759000" />
+      <workItem from="1756120938353" duration="1991000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -153,6 +168,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="init 2" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756097561446" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756122816196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

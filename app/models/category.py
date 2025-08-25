@@ -4,12 +4,18 @@ from datetime import datetime
 
 class CategoryBase(BaseModel):
     name: str
+    description: str | None = None
+    parent_id: UUID | None = None
+    image_url: str | None = None
 
 class CategoryCreate(CategoryBase):
     pass
 
 class CategoryUpdate(BaseModel):
     name: str | None = None
+    description: str | None = None
+    parent_id: UUID | None = None
+    image_url: str | None = None
 
 class Category(CategoryBase):
     id: UUID = Field(default_factory=uuid4)

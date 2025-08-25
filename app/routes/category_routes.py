@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from uuid import UUID
-from typing import List
+from typing import List, Optional
 
 from app.models.category import Category, CategoryCreate, CategoryUpdate
 from app.services.category_service import category_service
@@ -8,8 +8,16 @@ from app.services.category_service import category_service
 router = APIRouter()
 
 @router.get('/', response_model=List[Category])
-async def list_categories():
-    return await category_service.list()
+async def list_categories(
+    name: Optional[str] = Query(None, description="Filter by category name"),
+    parent_id: Optional[UUID] = Query(None, description="Filter by parent category")
+):
+    categories = await category_service.list()
+    if name:
+        categories = [c for c in categories if name.lower() in c.name.lower()]
+    if parent_id:
+        categories = [c for c in categories if c.parent_id == parent_id]
+    return categories
 
 @router.get('/{category_id}', response_model=Category)
 async def get_category(category_id: UUID):

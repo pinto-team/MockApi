@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from uuid import UUID
-from typing import List
+from typing import List, Optional
 
 from app.models.product import ProductResponse, ProductCreate, ProductUpdate
 from app.services.product_service import product_service
@@ -8,8 +8,11 @@ from app.services.product_service import product_service
 router = APIRouter()
 
 @router.get('/', response_model=List[ProductResponse])
-async def list_products():
-    return await product_service.list()
+async def list_products(
+    search: Optional[str] = Query(None, description="Search in name, description, tags"),
+    sort_by_price: Optional[str] = Query(None, description="Sort by price: 'asc' or 'desc'")
+):
+    return await product_service.list(search=search, sort_by_price=sort_by_price)
 
 @router.get('/{product_id}', response_model=ProductResponse)
 async def get_product(product_id: UUID):
