@@ -4,36 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/FastAPIProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/db/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/db/fake_db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/common.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/product.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/user.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/product_routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/router_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/routes/user_routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/faker_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/product_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/user_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/new_resource.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_main.http" afterDir="false" />
+    <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="init">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +24,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pinto-team"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/pinto-team/MockApi.git",
+    "accountId": "576ae13f-4d62-4d67-bb41-86a7354a3858"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -130,11 +115,25 @@
       <option name="presentableId" value="Default" />
       <updated>1756027874037</updated>
       <workItem from="1756027875156" duration="1276000" />
+      <workItem from="1756095878233" duration="861000" />
     </task>
+    <task id="LOCAL-00001" summary="init">
+      <option name="closed" value="true" />
+      <created>1756096105070</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756096105070</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756028217935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

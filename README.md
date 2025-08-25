@@ -17,3 +17,24 @@ Then open: http://127.0.0.1:8000/docs
 4) Include the new router in `app/main.py`.
 
 > The generic CRUD service handles: list (filters + search + sort + pagination), get, create (unique fields), update, soft delete/reactivate, and optional seeding.
+
+
+GET  http://localhost:8000/health
+
+# Products
+GET    http://localhost:8000/products
+GET    http://localhost:8000/products/{id}
+POST   http://localhost:8000/products
+PUT    http://localhost:8000/products/{id}
+DELETE http://localhost:8000/products/{id}
+DELETE http://localhost:8000/products/{id}?hard=true
+POST   http://localhost:8000/products/seed?n=5
+
+# Users
+GET    http://localhost:8000/users
+GET    http://localhost:8000/users/{id}
+POST   http://localhost:8000/users
+PUT    http://localhost:8000/users/{id}
+DELETE http://localhost:8000/users/{id}
+DELETE http://localhost:8000/users/{id}?hard=true
+POST   http://localhost:8000/users/seed?n=5
