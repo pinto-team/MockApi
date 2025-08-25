@@ -1,51 +1,38 @@
-from typing import Optional
-from fastapi import APIRouter, HTTPException, Query
-from app.routes.router_factory import build_crud_router
+from fastapi import APIRouter, HTTPException
+from uuid import UUID
+from typing import List
+
+from app.models.product import ProductResponse, ProductCreate, ProductUpdate
 from app.services.product_service import product_service
-from app.services.faker_utils import fake_product_create
-from app.models.product import Product, ProductCreate, ProductUpdate
 
-# Seed via Faker
-def _seed(n: int) -> int:
-    added = 0
-    for _ in range(n):
-        product_service.create(fake_product_create())
-        added += 1
-    return added
+router = APIRouter()
 
-router: APIRouter = build_crud_router(
-    resource_name="product",
-    service=product_service,
-    CreateModel=ProductCreate,
-    UpdateModel=ProductUpdate,
-    Model=Product,
-    allowed_filters=["brand", "category_id", "seller_id", "warehouse_id", "is_active"],
-    seed_fn=_seed,
-)
+@router.get('/', response_model=List[ProductResponse])
+async def list_products():
+    return await product_service.list()
 
-# --------- Extra endpoint: price quote ---------
-@router.get("/{item_id}/price-quote")
-def price_quote(item_id: str, qty: int = Query(..., ge=1)):
-    """
-    Return the effective unit price for the given quantity,
-    using pricing_tiers if available; otherwise base_price.
-    """
-    from uuid import UUID
-    obj = product_service.get(item_id) or product_service.get(UUID(item_id))
-    if not obj:
-        raise HTTPException(status_code=404, detail="product not found")
+@router.get('/{product_id}', response_model=ProductResponse)
+async def get_product(product_id: UUID):
+    product = await product_service.get(product_id)
+    if not product:
+        raise HTTPException(404, 'Product not found')
+    return product
 
-    unit_price = obj.base_price
-    if obj.pricing_tiers:
-        # choose the best tier where min_qty <= qty and price is minimal
-        applicable = [t for t in obj.pricing_tiers if t.min_qty <= qty]
-        if applicable:
-            unit_price = min(t.unit_price for t in applicable)
+@router.post('/', response_model=ProductResponse)
+async def create_product(payload: ProductCreate):
+    product = await product_service.create(payload)
+    return await product_service.get(product.id)
 
-    return {
-        "product_id": str(obj.id),
-        "qty": qty,
-        "unit_price": unit_price,
-        "currency": obj.currency,
-        "base_price": obj.base_price,
-    }
+@router.put('/{product_id}', response_model=ProductResponse)
+async def update_product(product_id: UUID, payload: ProductUpdate):
+    product = await product_service.update(product_id, payload)
+    if not product:
+        raise HTTPException(404, 'Product not found')
+    return await product_service.get(product_id)
+
+@router.delete('/{product_id}')
+async def delete_product(product_id: UUID):
+    success = await product_service.delete(product_id)
+    if not success:
+        raise HTTPException(404, 'Product not found')
+    return {'status': 'deleted'}
