@@ -5,7 +5,7 @@ product_service = InMemoryCRUD(
     model_cls=Product,
     create_cls=ProductCreate,
     update_cls=ProductUpdate,
-    search_fields=["name","sku"],
+    search_fields=["name", "sku"],
     unique_fields=["sku"],
-    sortable_fields=["name","base_price","stock","created_at","updated_at"],
+    sortable_fields=["name", "base_price", "stock", "created_at", "updated_at"],
 )

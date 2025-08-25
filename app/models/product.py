@@ -1,11 +1,11 @@
 from typing import Optional, List
-from pydantic import BaseModel, Field, constr, conint, confloat
+from pydantic import BaseModel, Field, constr, conint, confloat, field_validator, model_validator, AnyUrl
 from uuid import UUID, uuid4
 from datetime import datetime
 
-SkuStr = constr(pattern=r"^[A-Z0-9-]+$")
-CurrencyStr = constr(pattern=r"^[A-Z]{3}$")
-BarcodeStr = constr(pattern=r"^[0-9]{8,14}$")
+SkuStr = constr(pattern=r"^[A-Z0-9-]+$", strip_whitespace=True)
+CurrencyStr = constr(pattern=r"^[A-Z]{3}$", strip_whitespace=True)
+BarcodeStr = constr(pattern=r"^[0-9]{8,14}$", strip_whitespace=True)
 
 class PricingTier(BaseModel):
     min_qty: conint(ge=1)
@@ -53,8 +53,54 @@ class ProductBase(BaseModel):
     attributes: Optional[Attributes] = None
     allow_backorder: bool = False
     is_active: bool = True
-    images: Optional[List[str]] = None
+    images: Optional[List[AnyUrl]] = None
     tags: Optional[List[str]] = None
+
+    # ---------- Field-level validators ----------
+
+    @field_validator("sku")
+    @classmethod
+    def sku_upper(cls, v: str) -> str:
+        return v.upper()
+
+    @field_validator("currency")
+    @classmethod
+    def currency_upper(cls, v: str) -> str:
+        return v.upper()
+
+    @field_validator("images")
+    @classmethod
+    def images_rules(cls, v: Optional[List[AnyUrl]]) -> Optional[List[AnyUrl]]:
+        # allow None or 1..4 items
+        if v is None:
+            return v
+        if not (1 <= len(v) <= 4):
+            raise ValueError("images must contain between 1 and 4 URLs")
+        return v
+
+    # ---------- Model-level validators ----------
+
+    @model_validator(mode="after")
+    def check_business_rules(self):
+        # purchase_price should not exceed base_price
+        if self.purchase_price is not None and self.purchase_price > self.base_price:
+            raise ValueError("purchase_price cannot be greater than base_price")
+
+        # pricing tiers sorted by min_qty + unit_price <= base_price
+        if self.pricing_tiers:
+            prev = 0
+            for tier in sorted(self.pricing_tiers, key=lambda t: t.min_qty):
+                if tier.min_qty <= prev:
+                    raise ValueError("pricing_tiers must be strictly increasing by min_qty")
+                prev = tier.min_qty
+                if tier.unit_price > self.base_price:
+                    raise ValueError("tier unit_price cannot exceed base_price")
+
+        # If min_order_multiple is set, it must be >= 1 (already) and also should not exceed min_order_quantity (optional rule)
+        if self.min_order_multiple is not None and self.min_order_multiple < 1:
+            raise ValueError("min_order_multiple must be >= 1")
+
+        return self
 
 class ProductCreate(ProductBase):
     pass
@@ -83,7 +129,7 @@ class ProductUpdate(BaseModel):
     attributes: Optional[Attributes] = None
     allow_backorder: Optional[bool] = None
     is_active: Optional[bool] = None
-    images: Optional[List[str]] = None
+    images: Optional[List[AnyUrl]] = None
     tags: Optional[List[str]] = None
 
 class Product(ProductBase):
