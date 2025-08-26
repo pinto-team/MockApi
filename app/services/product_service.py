@@ -2,18 +2,47 @@ from uuid import UUID
 from typing import List, Optional
 from pymongo import ASCENDING, DESCENDING
 
+from . import file_service
 from .base import MongoCRUD, _serialize
-from app.models.product import Product, ProductCreate, ProductUpdate, ProductResponse, WarehouseAvailabilityResponse
+from app.models.product import (
+    Product,
+    ProductCreate,
+    ProductUpdate,
+    ProductResponse,
+    WarehouseAvailabilityResponse
+)
 from app.models.store import Store
 from app.models.category import Category
 from app.models.brand import Brand
 from app.models.warehouse import Warehouse
-from app.models.image import Image
 from app.db.mongo import db
+from app.services.category_service import category_service
+from app.services.brand_service import brand_service
+
 
 class ProductService(MongoCRUD):
     def __init__(self):
-        super().__init__(collection="products", model_cls=Product, create_cls=ProductCreate, update_cls=ProductUpdate)
+        super().__init__(
+            collection="products",
+            model_cls=Product,
+            create_cls=ProductCreate,
+            update_cls=ProductUpdate
+        )
+
+    async def create(self, payload: ProductCreate) -> Product:
+        """اینجا قبل از ساخت محصول، بررسی می‌کنیم که برند و دسته‌بندی واقعاً وجود داشته باشند"""
+        # ✅ بررسی برند
+        brand = await brand_service.get(payload.brand_id)
+        if not brand:
+            raise ValueError(f"Brand with id {payload.brand_id} does not exist")
+
+        # ✅ بررسی دسته‌بندی
+        category = await category_service.get(payload.category_id)
+        if not category:
+            raise ValueError(f"Category with id {payload.category_id} does not exist")
+
+        # ذخیره محصول
+        return await super().create(payload)
 
     async def list(
         self,
@@ -33,7 +62,8 @@ class ProductService(MongoCRUD):
                 ]
             }
 
-        cursor = db[self.collection].find(query)
+        # ✅ استفاده مستقیم از self.collection
+        cursor = self.collection.find(query)
 
         # ترتیب بر اساس قیمت
         if sort_by_price:
@@ -82,11 +112,15 @@ class ProductService(MongoCRUD):
 
             # Images
             imgs = []
-            async for img_doc in db["images"].find({"product_id": str(p.id)}):
-                imgs.append(Image(**_serialize(img_doc)))
+            if getattr(p, "images", []):
+                for fid in p.images:
+                    f_doc = await file_service.get(fid)
+                    if f_doc:
+                        imgs.append(f_doc)
             data["images"] = imgs
 
             responses.append(ProductResponse(**data))
         return responses
+
 
 product_service = ProductService()

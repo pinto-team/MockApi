@@ -3,12 +3,12 @@ from pydantic import BaseModel, Field, AnyUrl
 from uuid import UUID, uuid4
 from datetime import datetime
 from typing import Dict, List, Optional
+from app.models.file import File
 
 from .warehouse import WarehouseStock, Warehouse
 from .store import Store
 from .category import Category
 from .brand import Brand
-from .image import Image
 
 class PricingTier(BaseModel):
     min_qty: int
@@ -32,8 +32,8 @@ class ProductBase(BaseModel):
     name: str
     full_name: str | None = None
     description: str | None = None
-    brand_id: UUID
-    category_id: UUID
+    brand_id: str | None = None
+    category_id: str | None = None
 
     price: float
     wholesale_price: float | None = None
@@ -116,9 +116,10 @@ class Product(ProductBase):
 class WarehouseAvailabilityResponse(WarehouseStock):
     warehouse: Warehouse | None = None
 
+
 class ProductResponse(Product):
     store: Store | None = None
     category: Category | None = None
     brand: Brand | None = None
-    images: List[Image] | None = None
+    images: List[File] | None = None  # populate می‌شه
     warehouse_availability: List[WarehouseAvailabilityResponse] | None = None
