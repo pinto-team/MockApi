@@ -24,8 +24,12 @@ async def upload_image(file: UploadFile = File(...)):
     file_name = f"{uuid.uuid4()}.{ext}"
     file_path = UPLOAD_DIR / file_name
 
+    # ذخیره فایل روی دیسک
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
+
+    # محاسبه اندازه فایل
+    size = os.path.getsize(file_path)
 
     url = f"/static/{file_name}"
 
@@ -34,8 +38,8 @@ async def upload_image(file: UploadFile = File(...)):
         url=url,
         filename=file.filename,
         content_type=file.content_type,
-        size=file.spool_max_size
+        size=size
     )
     new_file = await file_service.create(file_doc)
 
-    return JSONResponse(new_file.model_dump())
+    return new_file
