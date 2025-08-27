@@ -23,3 +23,12 @@ class Brand(BrandBase):
     id: UUID = Field(default_factory=uuid4)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class Pagination(BaseModel):
+    page: int
+    limit: int
+    total: int
+
+class BrandListResponse(BaseModel):
+    items: list[Brand]
+    pagination: Pagination

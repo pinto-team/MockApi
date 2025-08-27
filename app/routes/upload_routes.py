@@ -1,45 +1,45 @@
-import os
 import uuid
-import shutil
 from pathlib import Path
-from fastapi import APIRouter, UploadFile, File, HTTPException
-from fastapi.responses import JSONResponse
-
+import shutil
+from typing import List
+from fastapi import APIRouter, HTTPException, UploadFile, File
+from pydantic import BaseModel
 from app.services.file_service import file_service
-from app.models.file import FileCreate
+from app.models.file import File as FileModel, FileCreate
 
 router = APIRouter()
+
 UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+ALLOWED_EXT = {"jpg", "jpeg", "png", "gif", "webp"}
 
-@router.post("/upload")
-async def upload_image(file: UploadFile = File(...)):
-    ext = file.filename.split(".")[-1].lower()
-    allowed_ext = ["jpg", "jpeg", "png", "gif", "webp"]
+class UploadResponse(BaseModel):
+    files: List[FileModel]
 
-    if ext not in allowed_ext:
-        raise HTTPException(400, detail="فرمت فایل پشتیبانی نمی‌شود")
+@router.post("/upload", response_model=UploadResponse)
+async def upload(files: List[UploadFile] = File(...)):
+    results = []
+    for upload in files:
+        filename = Path(upload.filename).name
+        ext = filename.split(".")[-1].lower()
+        if ext not in ALLOWED_EXT:
+            raise HTTPException(status_code=400, detail=f"فرمت فایل پشتیبانی نمی‌شود: {filename}")
 
-    file_name = f"{uuid.uuid4()}.{ext}"
-    file_path = UPLOAD_DIR / file_name
+        unique_filename = f"{uuid.uuid4()}.{ext}"
+        dest = UPLOAD_DIR / unique_filename
+        try:
+            with dest.open("wb") as buffer:
+                shutil.copyfileobj(upload.file, buffer)
+            file_data = FileCreate(
+                url=f"/static/{unique_filename}",
+                filename=filename,
+                content_type=upload.content_type,
+                size=upload.size
+            )
+            created = await file_service.create(file_data)
+            results.append(created)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"خطا در ذخیره فایل: {str(e)}")
 
-    # ذخیره فایل روی دیسک
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-
-    # محاسبه اندازه فایل
-    size = os.path.getsize(file_path)
-
-    url = f"/static/{file_name}"
-
-    # رکورد در دیتابیس
-    file_doc = FileCreate(
-        url=url,
-        filename=file.filename,
-        content_type=file.content_type,
-        size=size
-    )
-    new_file = await file_service.create(file_doc)
-
-    return new_file
+    return {"files": results}
