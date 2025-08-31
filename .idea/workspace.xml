@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="refactor model">
+    <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="last state">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/mongo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/mongo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/brand.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/brand.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/brand_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/brand_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/brand_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/brand_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/file_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/file_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +139,8 @@
       <workItem from="1756586914675" duration="2000" />
       <workItem from="1756589456082" duration="1222000" />
       <workItem from="1756623261761" duration="530000" />
+      <workItem from="1756625478324" duration="1481000" />
+      <workItem from="1756627333539" duration="7757000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -183,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756299114856</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="last state">
+      <option name="closed" value="true" />
+      <created>1756625522760</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1756625522760</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,9 +211,10 @@
     <MESSAGE value="add file" />
     <MESSAGE value="refactor" />
     <MESSAGE value="refactor model" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor model" />
+    <MESSAGE value="last state" />
+    <option name="LAST_COMMIT_MESSAGE" value="last state" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756623266606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756644364229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
