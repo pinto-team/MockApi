@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="last state">
+    <list default="true" id="88063f2c-f491-4fa0-8d8a-b69bfdc23694" name="Changes" comment="BRAND EDIT">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/db/mongo.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/mongo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/brand.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/brand.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/brand_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/brand_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/brand_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/brand_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/file_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/file_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/category_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/category_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/category_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/category_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +138,12 @@
       <workItem from="1756589456082" duration="1222000" />
       <workItem from="1756623261761" duration="530000" />
       <workItem from="1756625478324" duration="1481000" />
-      <workItem from="1756627333539" duration="7757000" />
+      <workItem from="1756627333539" duration="9111000" />
+      <workItem from="1756667526621" duration="1401000" />
+      <workItem from="1756756550097" duration="30000" />
+      <workItem from="1756792601068" duration="6541000" />
+      <workItem from="1756817459747" duration="3009000" />
+      <workItem from="1756875446914" duration="2633000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -198,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756625522760</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="BRAND EDIT">
+      <option name="closed" value="true" />
+      <created>1756646387378</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1756646387378</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,9 +223,10 @@
     <MESSAGE value="refactor" />
     <MESSAGE value="refactor model" />
     <MESSAGE value="last state" />
-    <option name="LAST_COMMIT_MESSAGE" value="last state" />
+    <MESSAGE value="BRAND EDIT" />
+    <option name="LAST_COMMIT_MESSAGE" value="BRAND EDIT" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756644364229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/FastAPIProject$FastAPIProject.coverage" NAME="FastAPIProject Coverage Results" MODIFIED="1756877536939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
