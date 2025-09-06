@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from uuid import UUID, uuid4
 from datetime import datetime
 
@@ -8,14 +8,37 @@ class WarehouseBase(BaseModel):
     capacity: int | None = None
     manager_id: UUID | None = None
 
-class WarehouseCreate(WarehouseBase):
-    pass
+class WarehouseCreate(BaseModel):
+    name: str
+    location: str | None = None
+    capacity: int | None = None
+    manager_id: UUID | None = None
+
+    # فیکس 422: رشته‌ی خالی → None
+    @field_validator("manager_id", mode="before")
+    @classmethod
+    def _manager_id_empty_string_to_none(cls, v):
+        if v is None:
+            return None
+        if isinstance(v, str) and v.strip() == "":
+            return None
+        return v
 
 class WarehouseUpdate(BaseModel):
     name: str | None = None
     location: str | None = None
     capacity: int | None = None
     manager_id: UUID | None = None
+
+    # فیکس 422: رشته‌ی خالی → None
+    @field_validator("manager_id", mode="before")
+    @classmethod
+    def _manager_id_empty_string_to_none(cls, v):
+        if v is None:
+            return None
+        if isinstance(v, str) and v.strip() == "":
+            return None
+        return v
 
 class Warehouse(WarehouseBase):
     id: UUID = Field(default_factory=uuid4)

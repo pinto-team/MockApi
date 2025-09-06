@@ -1,60 +1,85 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 from uuid import UUID
-from typing import List, Optional
+from typing import Optional, List
 
 from app.models.warehouse import Warehouse, WarehouseCreate, WarehouseUpdate
+from app.models.response import ApiSuccessResponse, SuccessMeta, PaginationMeta
 from app.services.warehouse_service import warehouse_service
 
 router = APIRouter()
 
-@router.get('/', response_model=List[Warehouse])
+@router.get("", response_model=ApiSuccessResponse[List[Warehouse]])
 async def list_warehouses(
-    search: Optional[str] = Query(None, description="Search warehouses by name or location"),
-    sort_by: Optional[str] = Query(None, description="Sort by 'name' or 'created_at' (asc/desc)")
+    request: Request,
+    name: Optional[str] = Query(None, description="Filter by warehouse name"),
+    location: Optional[str] = Query(None, description="Filter by location"),
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, ge=1, le=100),
 ):
-    warehouses = await warehouse_service.list()
+    filters = {}
+    if name:
+        filters["name"] = name
+    if location:
+        filters["location"] = location
 
-    # فیلتر با search
-    if search:
-        warehouses = [
-            w for w in warehouses
-            if search.lower() in w.name.lower() or (w.location and search.lower() in w.location.lower())
-        ]
+    items, total = await warehouse_service.list(filters, page, limit)
 
-    # مرتب‌سازی
-    if sort_by:
-        if sort_by == "name":
-            warehouses = sorted(warehouses, key=lambda w: w.name)
-        elif sort_by == "name_desc":
-            warehouses = sorted(warehouses, key=lambda w: w.name, reverse=True)
-        elif sort_by == "created_at":
-            warehouses = sorted(warehouses, key=lambda w: w.created_at)
-        elif sort_by == "created_at_desc":
-            warehouses = sorted(warehouses, key=lambda w: w.created_at, reverse=True)
+    pagination = PaginationMeta(page=page, limit=limit, total=total)
+    meta = SuccessMeta(
+        message="warehouses.list.success",
+        method=request.method,
+        path=request.url.path,
+        host=request.client.host if request.client else None,
+        pagination=pagination,
+    )
+    return ApiSuccessResponse(data=items, meta=meta)
 
-    return warehouses
+@router.post("", response_model=ApiSuccessResponse[Warehouse], status_code=201)
+async def create_warehouse(request: Request, payload: WarehouseCreate):
+    created = await warehouse_service.create(payload)
+    meta = SuccessMeta(
+        message="warehouses.create.success",
+        method=request.method,
+        path=request.url.path,
+        host=request.client.host if request.client else None,
+    )
+    return ApiSuccessResponse(data=created, meta=meta)
 
-@router.get('/{warehouse_id}', response_model=Warehouse)
-async def get_warehouse(warehouse_id: UUID):
+@router.get("/{warehouse_id}", response_model=ApiSuccessResponse[Warehouse])
+async def get_warehouse(request: Request, warehouse_id: UUID):
     warehouse = await warehouse_service.get(warehouse_id)
     if not warehouse:
-        raise HTTPException(404, 'Warehouse not found')
-    return warehouse
+        raise HTTPException(status_code=404, detail="Warehouse not found")
+    meta = SuccessMeta(
+        message="warehouses.get.success",
+        method=request.method,
+        path=request.url.path,
+        host=request.client.host if request.client else None,
+    )
+    return ApiSuccessResponse(data=warehouse, meta=meta)
 
-@router.post('/', response_model=Warehouse)
-async def create_warehouse(payload: WarehouseCreate):
-    return await warehouse_service.create(payload)
+@router.put("/{warehouse_id}", response_model=ApiSuccessResponse[Warehouse])
+async def update_warehouse(request: Request, warehouse_id: UUID, payload: WarehouseUpdate):
+    updated = await warehouse_service.update(warehouse_id, payload)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Warehouse not found")
+    meta = SuccessMeta(
+        message="warehouses.update.success",
+        method=request.method,
+        path=request.url.path,
+        host=request.client.host if request.client else None,
+    )
+    return ApiSuccessResponse(data=updated, meta=meta)
 
-@router.put('/{warehouse_id}', response_model=Warehouse)
-async def update_warehouse(warehouse_id: UUID, payload: WarehouseUpdate):
-    warehouse = await warehouse_service.update(warehouse_id, payload)
-    if not warehouse:
-        raise HTTPException(404, 'Warehouse not found')
-    return warehouse
-
-@router.delete('/{warehouse_id}')
-async def delete_warehouse(warehouse_id: UUID):
-    success = await warehouse_service.delete(warehouse_id)
-    if not success:
-        raise HTTPException(404, 'Warehouse not found')
-    return {'status': 'deleted'}
+@router.delete("/{warehouse_id}", response_model=ApiSuccessResponse[dict])
+async def delete_warehouse(request: Request, warehouse_id: UUID):
+    ok = await warehouse_service.delete(warehouse_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Warehouse not found")
+    meta = SuccessMeta(
+        message="warehouses.delete.success",
+        method=request.method,
+        path=request.url.path,
+        host=request.client.host if request.client else None,
+    )
+    return ApiSuccessResponse(data={"status": "deleted"}, meta=meta)
